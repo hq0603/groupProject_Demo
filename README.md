@@ -1,4 +1,4 @@
-# Action Roguelike Game (Course Project)
+# Action Roguelike Game 
 
 # Project Features
 - Third-person Action Character Movement
