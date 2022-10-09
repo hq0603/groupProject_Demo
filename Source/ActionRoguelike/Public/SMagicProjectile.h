@@ -13,6 +13,7 @@ class USActionEffect;
 UCLASS()
 class ACTIONROGUELIKE_API ASMagicProjectile : public ASProjectileBase // Re-parented from AActor
 {
+	// 这里不知道为什么会报错 上面include的包应该是正确的
 	GENERATED_BODY()
 
 protected:
