@@ -17,10 +17,10 @@ ASCharacter::ASCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	// 正确连接弹簧臂和角色
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>("SpringArmComp");
 	SpringArmComp->bUsePawnControlRotation = true;
-	SpringArmComp->SetupAttachment(RootComponent);
+	SpringArmComp->SetupAttachment(RootComponent);// rootcomponent就是胶囊
 	// We control the rotation of spring arm with pawn control rotation already, this disables a subtle side effect
 	// where rotating our CapsuleComponent (eg. caused by bOrientRotationToMovement in Character Movement) will rotate our spring arm until it self corrects later in the update
 	// This may cause unwanted effects when using CameraLocation during Tick as it may be slightly offset from our final camera position.
@@ -67,9 +67,11 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	// 角色可以移动
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASCharacter::MoveRight);
 
+	// 鼠标在x轴运动 控制旋转
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
@@ -91,7 +93,7 @@ void ASCharacter::HealSelf(float Amount /* = 100 */)
 	AttributeComp->ApplyHealthChange(this, Amount);
 }
 
-
+// 角色向前移动
 void ASCharacter::MoveForward(float Value)
 {
 	FRotator ControlRot = GetControlRotation();
